@@ -15,14 +15,13 @@
 
 class UartThread: public Protothread {
 public:
-	UartThread(){
-		swtimer = new SwTimer(&getRunTimeInMs);
+	UartThread(SwTimer::callback_f func):swtimer(func){
 	}
 	virtual bool Run();
 
 
 private:
-	SwTimer *swtimer;
+	SwTimer swtimer;
 	char ch;
 	int len;
 	int i;

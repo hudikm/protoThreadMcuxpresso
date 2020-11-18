@@ -1,3 +1,5 @@
 SwTimer.cpp:3:6:bool SwTimer::isExpired()	24	static
-SwTimer.cpp:7:6:void SwTimer::startTimer(uint64_t)	32	static
-SwTimer.cpp:12:6:void SwTimer::restartTimer()	24	static
+SwTimer.cpp:7:6:void SwTimer::startTimer(uint64_t)	24	static
+SwTimer.cpp:12:6:void SwTimer::restartTimer()	16	static
+delegate.h:199:13:) const [with TReturn = long long unsigned int; TParams = {}]	16	static
+delegate.h:240:10:)>::is_valid() const [with TReturn = long long unsigned int; TParams = {}]	16	static

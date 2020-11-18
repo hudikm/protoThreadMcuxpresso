@@ -8,7 +8,7 @@ fsl_tsi_v4.h:503:20:TSI_StartSoftwareTrigger	16	static
 fsl_tsi_v4.h:515:20:TSI_SetMeasuredChannelNumber	16	static
 fsl_tsi_v4.h:584:24:TSI_GetCounter	16	static
 fsl_tsi_v4.h:596:20:TSI_SetLowThreshold	16	static
-fsl_tsi_v4.h:610:20:TSI_SetHighThreshold	24	static
+fsl_tsi_v4.h:610:20:TSI_SetHighThreshold	16	static
 fsl_tsi_v4.h:624:20:TSI_SetAnalogMode	16	static
 fsl_tsi_v4.h:647:20:TSI_SetReferenceChargeCurrent	16	static
 fsl_tsi_v4.h:659:20:TSI_SetElectrodeChargeCurrent	16	static

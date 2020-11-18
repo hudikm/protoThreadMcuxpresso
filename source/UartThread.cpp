@@ -20,15 +20,15 @@ bool UartThread::Run() {
 			PT_WAIT_UNTIL(isNewCharReady());
 			len = newChar - 0x30;
 			// read n data bytes
-			swtimer->startTimer(2000);
+			swtimer.startTimer(2000);
 			for (i = 0; i < len; i++) {
-				swtimer->restartTimer();
-				PT_WAIT_UNTIL(isNewCharReady() || swtimer->isExpired());
-				if(swtimer->isExpired()) break;
+				swtimer.restartTimer();
+				PT_WAIT_UNTIL(isNewCharReady() || swtimer.isExpired());
+				if(swtimer.isExpired()) break;
 				data[i] = newChar;
 			}
-			data[i++] = '\0';
-			PRINTF("\n\r%s",data);
+			data[i] = '\0';
+			printf("%s\n\r",data);
 		}
 	}
 

@@ -10,5 +10,5 @@ fsl_adc16.c:226:6:ADC16_SetHardwareCompareConfig	24	static
 fsl_adc16.c:263:6:ADC16_SetHardwareAverage	24	static
 fsl_adc16.c:310:10:ADC16_GetStatusFlags	24	static
 fsl_adc16.c:327:6:ADC16_ClearStatusFlags	16	static
-fsl_adc16.c:337:6:ADC16_SetChannelConfig	40	static
-fsl_adc16.c:359:10:ADC16_GetChannelStatusFlags	32	static
+fsl_adc16.c:337:6:ADC16_SetChannelConfig	32	static
+fsl_adc16.c:359:10:ADC16_GetChannelStatusFlags	24	static

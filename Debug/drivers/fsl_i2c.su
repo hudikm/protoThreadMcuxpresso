@@ -12,7 +12,7 @@ fsl_i2c.c:234:17:I2C_InitTransferStateMachine	40	static
 fsl_i2c.c:272:17:I2C_CheckAndClearError	24	static
 fsl_i2c.c:295:17:I2C_MasterTransferRunStateMachine	48	static
 fsl_i2c.c:458:13:I2C_TransferCommonIRQHandler	16	static
-fsl_i2c.c:472:6:I2C_MasterInit	40	static
+fsl_i2c.c:472:6:I2C_MasterInit	32	static
 fsl_i2c.c:534:6:I2C_MasterDeinit	16	static
 fsl_i2c.c:545:6:I2C_MasterGetDefaultConfig	16	static
 fsl_i2c.c:569:6:I2C_EnableInterrupts	24	static

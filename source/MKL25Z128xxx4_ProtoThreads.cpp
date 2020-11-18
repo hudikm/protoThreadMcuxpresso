@@ -39,8 +39,8 @@
 #include "clock_config.h"
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
-#include "vector.h"
-#include "numeric.h"
+#include "etl/delegate.h"
+#include "etl/numeric.h"
 #include "fsl_lpsci.h"
 #include "SwTimer.h"
 #include "UartThread.h"
@@ -62,49 +62,57 @@ extern "C" void SysTick_Handler() {
 	++glTicks;
 }
 
-void print(const etl::ivector<int>& v) {
-	for (int i : v) {
-		PRINTF("%d \n\r", i);
+extern "C" void UART0_IRQHandler() {
+	newCharFlag = true;
+	if ((kLPSCI_RxDataRegFullFlag) & LPSCI_GetStatusFlags(UART0)) {
+		newCharFlag = true;
+		newChar = LPSCI_ReadByte(UART0);
+		LPSCI_WriteByte(UART0, newChar); // Echo
 	}
 }
 
-extern "C" void UART0_IRQHandler() {
-	newCharFlag = true;
-	newChar = GETCHAR();
-	PUTCHAR(newChar);
+// printf retargeting
+extern "C" int _write(int iFileHandle, char *pcBuffer, int iLength){
+	LPSCI_WriteBlocking(UART0, (uint8_t*)pcBuffer, iLength);
+	return iLength;
 }
 
-SwTimer swtimer1(&getRunTimeInMs);
-UartThread uartThread;
-LedFlasher ledFlasher;
+SwTimer swtimer1(SwTimer::callback_f::create<getRunTimeInMs>());
+UartThread uartThread(SwTimer::callback_f::create<getRunTimeInMs>());
+LedFlasher ledFlasher(swtimer1);
 int main(void) {
 
 	/* Init board hardware. */
 	BOARD_InitBootPins();
 	BOARD_InitBootClocks();
 	BOARD_InitBootPeripherals();
+
+#if SDK_DEBUGCONSOLE
 	/* Init FSL debug console. */
 	BOARD_InitDebugConsole();
+#endif
 
 	// Setup Systick
 	SysTick_Config(SYSTICK_TICKS);
 	EnableIRQ(SysTick_IRQn);
 
-	PRINTF("Hello World\n");
+	/* Inicializacia UART0 (LPSCI)*/
+	CLOCK_SetLpsci0Clock(0x1U); // Zapnutie hodin tu alebo cez GUI clock wizzard
 
-	etl::vector<int, 10> v1;
-	v1.push_back(1);
-	v1.push_back(2);
-	v1.push_back(3);
-	v1.push_back(4);
-	print(v1);
+	lpsci_config_t user_config;
+	LPSCI_GetDefaultConfig(&user_config);
+	user_config.baudRate_Bps = 19200U;
+	user_config.enableRx = true;
+	user_config.enableTx = true;
+	LPSCI_Init(UART0, &user_config, CLOCK_GetPllFllSelClkFreq());
+	LPSCI_EnableInterrupts(UART0, kLPSCI_RxDataRegFullInterruptEnable);
 
 	/* Enable RX interrupt. */
 	LPSCI_EnableInterrupts(UART0, kLPSCI_RxDataRegFullInterruptEnable);
 	EnableIRQ(UART0_IRQn);
 
-	/* Force the counter to be placed into memory. */
-	volatile static int i = 0;
+	printf("ProtoThreads demo\n\r");
+
 	/* Enter an infinite loop, just incrementing a counter. */
 	swtimer1.startTimer(1000);
 

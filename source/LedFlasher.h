@@ -13,12 +13,12 @@
 
 class LedFlasher : public Protothread {
 	public:
-	LedFlasher(){
-		swtimer = new SwTimer(&getRunTimeInMs);
+	LedFlasher(SwTimer &swtimer):swtimer(swtimer){
+
 	}
      virtual bool Run();
 	private:
-     SwTimer *swtimer;
+     SwTimer &swtimer;
 };
 
 #endif /* LEDFLASHER_H_ */

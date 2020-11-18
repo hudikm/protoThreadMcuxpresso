@@ -1,14 +1,12 @@
-/*
- * etl_profile.h
- *
- *  Created on: 4. 12. 2019
- *      Author: martin
- */
+#ifndef __ETL_PROFILE_H__
+#define __ETL_PROFILE_H__
 
-#ifndef ETL_PROFILE_H_
-#define ETL_PROFILE_H_
-#include "etl/profiles/etl_profile.h"
+#define ETL_TARGET_DEVICE_ARM
+#define ETL_TARGET_OS_NONE
+#define ETL_COMPILER_GCC
+#define ETL_CPP11_SUPPORTED                      (__cplusplus >= 201103L)
+#define ETL_CPP14_SUPPORTED                      (__cplusplus >= 201402L)
+#define ETL_CPP17_SUPPORTED                      (__cplusplus >= 201703L)
+#define ETL_NO_STL
 
-
-
-#endif /* ETL_PROFILE_H_ */
+#endif

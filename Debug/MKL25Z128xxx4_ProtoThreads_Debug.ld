@@ -2,11 +2,11 @@
  * GENERATED FILE - DO NOT EDIT
  * Copyright (c) 2008-2013 Code Red Technologies Ltd,
  * Copyright 2015, 2018-2019 NXP
- * (c) NXP Semiconductors 2013-2019
+ * (c) NXP Semiconductors 2013-2020
  * Generated linker script file for MKL25Z128xxx4
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.23
- * MCUXpresso IDE v11.0.1 [Build 2563] [2019-09-01] on 11.12.2019 14:02:21
+ * MCUXpresso IDE v11.2.0 [Build 4120] [2020-07-09] on 18.11.2020 7:52:05
  */
 
 INCLUDE "MKL25Z128xxx4_ProtoThreads_Debug_library.ld"
@@ -87,20 +87,19 @@ SECTIONS
     } > PROGRAM_FLASH
     /*
      * for exception handling/unwind - some Newlib functions (in common
-     * with C++ and STDC++) use this. 
+     * with C++ and STDC++) use this.
      */
-    .ARM.extab : ALIGN(4) 
+    .ARM.extab : ALIGN(4)
     {
         *(.ARM.extab* .gnu.linkonce.armextab.*)
     } > PROGRAM_FLASH
 
-    __exidx_start = .;
-
     .ARM.exidx : ALIGN(4)
     {
+        __exidx_start = .;
         *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+        __exidx_end = .;
     } > PROGRAM_FLASH
-    __exidx_end = .;
  
     _etext = .;
         
@@ -109,26 +108,28 @@ SECTIONS
     .m_usb_data (NOLOAD) :
     {
         *(m_usb_bdt)
-    } > SRAM
+    } > SRAM AT> SRAM
     /* MAIN DATA SECTION */
-        /* Default MTB section */
-        .mtb_buffer_default (NOLOAD) :
-        {
-           KEEP(*(.mtb*))
-        } > SRAM
-    .uninit_RESERVED (NOLOAD) :
+    /* Default MTB section */
+    .mtb_buffer_default (NOLOAD) :
     {
-        . = ALIGN(4) ;
+        KEEP(*(.mtb*))
+    } > SRAM AT > SRAM
+    .uninit_RESERVED (NOLOAD) : ALIGN(4)
+    {
+        _start_uninit_RESERVED = .;
         KEEP(*(.bss.$RESERVED*))
        . = ALIGN(4) ;
         _end_uninit_RESERVED = .;
-    } > SRAM
+    } > SRAM AT> SRAM
 
     /* Main DATA section (SRAM) */
     .data : ALIGN(4)
     {
        FILL(0xff)
        _data = . ;
+       PROVIDE(__start_data_RAM = .) ;
+       PROVIDE(__start_data_SRAM = .) ;
        *(vtable)
        *(.ramfunc*)
        KEEP(*(CodeQuickAccess))
@@ -137,29 +138,37 @@ SECTIONS
        *(.data*)
        . = ALIGN(4) ;
        _edata = . ;
+       PROVIDE(__end_data_RAM = .) ;
+       PROVIDE(__end_data_SRAM = .) ;
     } > SRAM AT>PROGRAM_FLASH
 
     /* MAIN BSS SECTION */
-    .bss :
+    .bss : ALIGN(4)
     {
-        . = ALIGN(4) ;
         _bss = .;
+        PROVIDE(__start_bss_RAM = .) ;
+        PROVIDE(__start_bss_SRAM = .) ;
         *(.bss*)
         *(COMMON)
         . = ALIGN(4) ;
         _ebss = .;
+        PROVIDE(__end_bss_RAM = .) ;
+        PROVIDE(__end_bss_SRAM = .) ;
         PROVIDE(end = .);
-    } > SRAM
+    } > SRAM AT> SRAM
 
     /* DEFAULT NOINIT SECTION */
-    .noinit (NOLOAD):
+    .noinit (NOLOAD): ALIGN(4)
     {
-         . = ALIGN(4) ;
         _noinit = .;
+        PROVIDE(__start_noinit_RAM = .) ;
+        PROVIDE(__start_noinit_SRAM = .) ;
         *(.noinit*)
          . = ALIGN(4) ;
         _end_noinit = .;
-    } > SRAM
+       PROVIDE(__end_noinit_RAM = .) ;
+       PROVIDE(__end_noinit_SRAM = .) ;        
+    } > SRAM AT> SRAM
 
     /* Reserve and place Heap within memory map */
     _HeapSize = 0x400;

@@ -11,8 +11,8 @@ fsl_clock.c:281:17:CLOCK_GetInternalRefClkSelectFreq	8	static
 fsl_clock.c:295:17:CLOCK_GetFllRefClkFreq	8	static
 fsl_clock.c:309:17:CLOCK_GetPll0RefFreq	8	static
 fsl_clock.c:315:16:CLOCK_GetOscRangeFromFreq	24	static
-fsl_clock.c:335:10:CLOCK_GetOsc0ErClkFreq	16	static
-fsl_clock.c:349:10:CLOCK_GetEr32kClkFreq	24	static
+fsl_clock.c:335:10:CLOCK_GetOsc0ErClkFreq	8	static
+fsl_clock.c:349:10:CLOCK_GetEr32kClkFreq	16	static
 fsl_clock.c:373:10:CLOCK_GetPllFllSelClkFreq	16	static
 fsl_clock.c:394:10:CLOCK_GetPlatClkFreq	8	static
 fsl_clock.c:399:10:CLOCK_GetFlashClkFreq	16	static
@@ -29,7 +29,7 @@ fsl_clock.c:581:10:CLOCK_GetPll0Freq	16	static
 fsl_clock.c:605:10:CLOCK_SetExternalRefClkConfig	16	static
 fsl_clock.c:613:10:CLOCK_SetInternalRefClkConfig	32	static
 fsl_clock.c:661:10:CLOCK_CalcPllDiv	56	static
-fsl_clock.c:758:6:CLOCK_EnablePll0	32	static
+fsl_clock.c:758:6:CLOCK_EnablePll0	24	static
 fsl_clock.c:778:6:CLOCK_SetOsc0MonitorMode	16	static
 fsl_clock.c:801:6:CLOCK_SetPll0MonitorMode	24	static
 fsl_clock.c:829:10:CLOCK_GetStatusFlags	16	static
